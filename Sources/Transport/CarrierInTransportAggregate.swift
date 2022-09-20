@@ -16,7 +16,7 @@ public enum CarrierTransportHistory: Codable {
 
 /// An aggregate that identifies a carrier that is either announced or in transit.
 ///
-/// This aggregate is used as the payload for the events "TransportCommand", "CarrierSeenAtLocation" and "CarrierWithoutDestinationSeenAtLocation".
+/// This aggregate is used as the payload for "TransportCommand", "CarrierSeenAtLocation" and "CarrierWithoutDestinationSeenAtLocation".
 public class CarrierInTransportAggregate: Codable, Hashable, Comparable, Equatable {
     public init(type: CarrierType?, barcode: String, location: String? = nil, destination: String? = nil) {
         self.type = type

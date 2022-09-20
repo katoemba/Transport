@@ -6,13 +6,13 @@
       "location" : "https://github.com/katoemba/Configuration",
       "state" : {
         "branch" : "main",
-        "revision" : "d13dcdafd24ffef3afc16511876e1a6c58753787"
+        "revision" : "7469bc150565b73188378e1fa0d56ca456d1cf78"
       }
     },
     {
       "identity" : "eventmanager",
-      "kind" : "localSourceControl",
-      "location" : "/Users/berrie/Software/Vanderlande/EventManager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/katoemba/EventManager",
       "state" : {
         "branch" : "main",
         "revision" : "97879e6b4e4fe289f5fc69d6b1bea0ee55ef1c6c"
