@@ -2,6 +2,7 @@ import Foundation
 import EventManager
 import Configuration
 
+/// A Transport manager to control conveyor transport of carriers.
 public class Transport: ObservableObject {
     private let sender = "Transport"
     
@@ -40,7 +41,7 @@ public class Transport: ObservableObject {
 
     // MARK: Event handlers
     
-    /// Process a tracking update received from the PLC. This will publish a CarrierSeenAtLocation event containing a ``CarrierInTransportAggregate``.
+    /// Process a tracking update received from the PLC through "BarcodeAtLocation". This will publish a CarrierSeenAtLocation event containing a ``CarrierInTransportAggregate``.
     /// In case the carrier has reached it's destination, it will be marked as 'delivered'.
     /// - Parameters:
     ///    - barcode: The barcode that identifies the carrier that is tracked.
@@ -66,7 +67,10 @@ public class Transport: ObservableObject {
     
     // MARK: Commands
 
-    func transportCommand(carrier: CarrierInTransportAggregate) {
+    /// Command to transport a carrier to a defined location, triggered from "TransportCommand".
+    /// - Parameters:
+    ///   - carrier: barcode and destination of the carrier that needs to be transported.
+    public func transportCommand(carrier: CarrierInTransportAggregate) {
         if let carrierInTransport = carriersInTransport[carrier.barcode] {
             let updatedCarrier = carrier
             updatedCarrier.location = carrierInTransport.location
