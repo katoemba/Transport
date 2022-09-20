@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "configuration",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/katoemba/Configuration",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d13dcdafd24ffef3afc16511876e1a6c58753787"
+      }
+    },
+    {
+      "identity" : "eventmanager",
+      "kind" : "localSourceControl",
+      "location" : "/Users/berrie/Software/Vanderlande/EventManager",
+      "state" : {
+        "branch" : "main",
+        "revision" : "97879e6b4e4fe289f5fc69d6b1bea0ee55ef1c6c"
+      }
+    },
+    {
+      "identity" : "swift-docc-plugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-docc-plugin",
+      "state" : {
+        "revision" : "3303b164430d9a7055ba484c8ead67a52f7b74f6",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Configuration
 
 struct TransportDetailView: View {
-    var carrierInTransport: Transport.CarrierInTransportAggregate
+    var carrierInTransport: CarrierInTransportAggregate
     let dateFormatter: DateFormatter
     
-    init(carrierInTransport: Transport.CarrierInTransportAggregate) {
+    init(carrierInTransport: CarrierInTransportAggregate) {
         self.carrierInTransport = carrierInTransport
         
         dateFormatter = DateFormatter()
@@ -104,7 +105,7 @@ struct TransportDetailView: View {
     }
 }
 
-extension Transport.CarrierTransportHistory {
+extension CarrierTransportHistory {
     var description: String {
         switch self {
         case .announced(_, _):

@@ -4,36 +4,7 @@ import Configuration
 
 public class Transport: ObservableObject {
     private let sender = "Transport"
-    public class CarrierInTransportAggregate: Codable, Hashable, Comparable, Equatable {
-        public init(type: CarrierType?, barcode: String, location: String? = nil, destination: String? = nil) {
-            self.type = type
-            self.barcode = barcode
-            self.location = location
-            self.destination = destination
-        }
-        
-        public static func == (lhs: Transport.CarrierInTransportAggregate, rhs: Transport.CarrierInTransportAggregate) -> Bool {
-            lhs.barcode == rhs.barcode
-        }
-
-        public static func < (lhs: Transport.CarrierInTransportAggregate, rhs: Transport.CarrierInTransportAggregate) -> Bool {
-            lhs.barcode < rhs.barcode
-        }
-        
-        public func hash(into hasher: inout Hasher) {
-            barcode.hash(into: &hasher)
-        }
-        
-        public let type: CarrierType?
-        public let barcode: String
-        public var location: String?
-        public var destination: String?
-        public var history = [CarrierTransportHistory]()
-        
-        private enum CodingKeys: String, CodingKey {
-            case type, barcode, location, destination
-        }
-    }
+    
     public struct BarcodeAtLocation: Codable {
         public init(barcode: String, location: String) {
             self.barcode = barcode
@@ -44,12 +15,6 @@ public class Transport: ObservableObject {
         public let location: String
     }
     
-    public enum CarrierTransportHistory: Codable {
-        case announced(timestamp: Date, destination: String)
-        case inTransit(timestamp: Date, location: String)
-        case delivered(timestamp: Date, location: String)
-    }
-
     @Published var carriersInTransport = [String: CarrierInTransportAggregate]()
     
     // MARK: Initialization
@@ -63,7 +28,7 @@ public class Transport: ObservableObject {
         // Listen to the PLC
         _ = EventManager.shared.subscribe("BarcodeAtLocation") { [weak self] (name: String, barcodeAtLocation: BarcodeAtLocation) in
             guard let weakSelf = self else { return }
-            weakSelf.handle(barcode: barcodeAtLocation.barcode, at: barcodeAtLocation.location)
+            weakSelf.barcodeAtLocation(barcodeAtLocation.barcode, at: barcodeAtLocation.location)
         }
         
         // Listen to transport command
@@ -75,7 +40,12 @@ public class Transport: ObservableObject {
 
     // MARK: Event handlers
     
-    func handle(barcode: String, at location: String) {
+    /// Process a tracking update received from the PLC. This will publish a CarrierSeenAtLocation event containing a ``CarrierInTransportAggregate``.
+    /// In case the carrier has reached it's destination, it will be marked as 'delivered'.
+    /// - Parameters:
+    ///    - barcode: The barcode that identifies the carrier that is tracked.
+    ///    - location: The location where the carrier is seen.
+    public func barcodeAtLocation(_ barcode: String, at location: String) {
         let carrierInTransport = carriersInTransport[barcode] ?? CarrierInTransportAggregate(type: nil, barcode: barcode, location: location)
                 
         carrierInTransport.location = location

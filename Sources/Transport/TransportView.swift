@@ -20,7 +20,7 @@ public struct TransportView: View {
     @State var barcode = ""
     @State var location = ""
     @State var destination = ""
-    @State var selectedCarrier: Transport.CarrierInTransportAggregate? = nil
+    @State var selectedCarrier: CarrierInTransportAggregate? = nil
     
     public init() {
     }
@@ -214,7 +214,7 @@ struct TransportCommandView: View {
                 .keyboardShortcut(.cancelAction)
                 
                 Button {
-                    EventManager.shared.publish("TransportCommand", sender: "Mock", object: Transport.CarrierInTransportAggregate(type: .pallet, barcode: barcode, location: nil, destination: destination))
+                    EventManager.shared.publish("TransportCommand", sender: "Mock", object: CarrierInTransportAggregate(type: .pallet, barcode: barcode, location: nil, destination: destination))
                     transportCommand = false
                 } label: {
                     Text("Ok")
